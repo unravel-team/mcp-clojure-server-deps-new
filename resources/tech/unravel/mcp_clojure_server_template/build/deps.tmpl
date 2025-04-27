@@ -10,7 +10,7 @@
     "-Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector"
     "-Dlog4j2.configurationFile=log4j2-mcp.xml"
     "-Dbabashka.json.provider=metosin/jsonista" "-Dlogging.level=INFO" "-cp"
-    "target/{{main/ns}}-1.0.0.jar" "{{main/file}}"]},
+    "/Users/vedang/{{top/file}}/target/{{main/ns}}-1.0.0.jar" "{{top/ns}}.{{main/ns}}"]},
   :test {:extra-deps {io.github.cognitect-labs/test-runner {:git/sha "dfb30dd",
                                                             :git/tag "v0.5.1"},
                       org.clojure/test.check {:mvn/version "1.1.1"}},

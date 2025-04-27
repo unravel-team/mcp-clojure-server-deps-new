@@ -146,13 +146,25 @@ CONVENTIONS.md:   ## Check if the CONVENTIONS file exists, if not, inform the us
 	@echo "Download the .aider.conf.yml file from the [[https://github.com/unravel-team/metaclj][metaclj]] project"
 
 check-tagref:
-	tagref
+	@if command -v tagref > /dev/null; then \
+		tagref; \
+	else \
+		echo "Warning: tagref not found, skipping check-tagref."; \
+	fi
 
 check-cljkondo:
-	clj-kondo --lint $(CLOJURE_SOURCES)
+	@if command -v clj-kondo > /dev/null; then \
+		clj-kondo --lint $(CLOJURE_SOURCES); \
+	else \
+		echo "Warning: clj-kondo not found, skipping check-cljkondo."; \
+	fi
 
 check-zprint:
-	zprint -c $(CLOJURE_SOURCES)
+	@if command -v zprint > /dev/null; then \
+		zprint -c $(CLOJURE_SOURCES); \
+	else \
+		echo "Warning: zprint not found, skipping check-zprint."; \
+	fi
 
 check: check-tagref check-cljkondo check-zprint    ## Check that the code is well linted and well formatted
 	@echo "All checks passed!"

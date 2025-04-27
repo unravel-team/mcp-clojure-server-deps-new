@@ -4,35 +4,46 @@
 
 ## Usage
 
-FIXME: write usage documentation!
+### Building the Uberjar
 
-Invoke a library API function from the command-line:
+1. `make clean && make build`
 
-    $ clojure -X {{top/ns}}.{{main/ns}}/foo :a 1 :b '"two"'
-    {:a 1, :b "two"} "Hello, World!"
+### Running the MCP server
+Some example commands you can try in Claude Desktop or Inspector:
 
-Run the project's tests (they'll fail until you edit them):
+1. Visualize this data for me using ...
+2. Add the prompts you would use to test your server in this section
 
-    $ clojure -T:build test
+#### Before running the MCP server
+Remember:
+1. Replace the full-path to the `{{name}}` JAR with the correct path on your system (i.e. replace `/Users/vedang/repo-name` below with the correct path)
+2. Other notes specific to your server should go here.
 
-Run the project's CI pipeline and build a JAR (this will fail until you edit the tests to pass):
+#### In Claude Desktop
 
-    $ clojure -T:build ci
+```json
+    "{{main/file}}": {
+      "command": "java",
+      "args": [
+        "-Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j2-factory",
+        "-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.Slf4jLog",
+        "-Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector",
+        "-Dlog4j2.configurationFile=log4j2-mcp.xml",
+        "-Dbabashka.json.provider=metosin/jsonista",
+        "-Dlogging.level=INFO",
+        "-cp",
+        "/Users/vedang/repo-name/target/{{name}}-1.0.0.jar",
+        "{{top/ns}}.{{main/ns}}"
+      ]
+    }
+```
 
-This will produce an updated `pom.xml` file with synchronized dependencies inside the `META-INF`
-directory inside `target/classes` and the JAR in `target`. You can update the version (and SCM tag)
-information in generated `pom.xml` by updating `build.clj`.
+#### In MCP Inspector
+Remember to use the full-path to the `{{name}}` JAR on your system.
 
-Install it locally (requires the `ci` task be run first):
-
-    $ clojure -T:build install
-
-Deploy it to Clojars -- needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` environment
-variables (requires the `ci` task be run first):
-
-    $ clojure -T:build deploy
-
-Your library will be deployed to {{group/id}}/{{artifact/id}} on clojars.org by default.
+```shell
+npx @modelcontextprotocol/inspector java -Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j2-factory -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.Slf4jLog -Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -Dlog4j2.configurationFile=log4j2-mcp.xml -Dbabashka.json.provider=metosin/jsonista -Dlogging.level=INFO -cp /Users/vedang/repo-name/target/{{name}}-1.0.0.jar {{top/ns}}.{{main/ns}}
+```
 
 ## License
 
